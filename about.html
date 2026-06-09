@@ -1,158 +1,1059 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>BAUEN | About Us</title>
-    <meta name="description" content="Learn about Bauen Architecture — our philosophy, values, and two decades of design excellence.">
+    <title>BAUEN | About Us — Architecture & Design Philosophy</title>
+    <meta name="description"
+        content="Discover Bauen Architecture — our philosophy, values, creative approach, and two decades of award-winning design excellence spanning 18 countries.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Didact+Gothic&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="css/plugins.css" />
     <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-    <div id="preloader"></div>
+    <style>
+        /* ============================================================
+           ABOUT PAGE — Spline Hero + Section Overrides
+           ============================================================ */
 
-    <div class="progress-wrap cursor-pointer">
-        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        /* ── Spline Particle Hero ── */
+        .about-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-hero__spline {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none;
+            /* overlay text stays clickable */
+            z-index: 0;
+        }
+
+        /* Dark gradient veil so text remains legible */
+        .about-hero__veil {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(5, 5, 5, 0.15) 0%, rgba(5, 5, 5, 0.6) 70%, rgba(5, 5, 5, 0.92) 100%),
+                linear-gradient(to bottom, rgba(5, 5, 5, 0.2) 0%, rgba(5, 5, 5, 0.7) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Bottom blend so hero merges seamlessly into page */
+        .about-hero__veil::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--bg-dark));
+            pointer-events: none;
+        }
+
+        .about-hero__content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .about-hero__eyebrow {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+        }
+
+        .about-hero__title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(48px, 7vw, 96px);
+            font-weight: 200;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.05;
+            margin: 0 0 32px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+        }
+
+        .about-hero__title em {
+            font-style: normal;
+            color: var(--accent);
+            font-weight: 300;
+        }
+
+        .about-hero__desc {
+            font-size: 16px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 560px;
+            margin: 0 auto 40px auto;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: heroFadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) 0.7s forwards;
+        }
+
+        .about-hero__scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            opacity: 0;
+            animation: heroFadeUp 1s ease 1.2s forwards;
+        }
+
+        .about-hero__scroll span {
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .about-hero__scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes heroFadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Divider accent ── */
+        .section-gold-line {
+            display: block;
+            width: 48px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 0 28px 0;
+        }
+
+        /* ── Philosophy split layout ── */
+        .philosophy-section {
+            padding: 120px 0;
+            background: var(--bg-dark);
+        }
+
+        .philosophy-image-wrap {
+            position: relative;
+            height: 560px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .philosophy-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            display: block;
+        }
+
+        .philosophy-image-wrap:hover img {
+            transform: scale(1.04);
+        }
+
+        .philosophy-image-badge {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            background: rgba(5, 5, 5, 0.82);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-left: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
+            padding: 14px 20px;
+            z-index: 2;
+        }
+
+        .philosophy-image-badge p {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(200, 180, 140, 0.9);
+        }
+
+        /* ── Stats bar enhanced ── */
+        .stats-section {
+            padding: 80px 0;
+            background: var(--bg-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 24px;
+            position: relative;
+        }
+
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 64px;
+            font-weight: 200;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .stat-suffix {
+            font-family: 'Outfit', sans-serif;
+            font-size: 42px;
+            font-weight: 200;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 12px;
+            margin-bottom: 0;
+        }
+
+        /* ── Values / Core Cards ── */
+        .values-section {
+            padding: 120px 0;
+            background: var(--bg-dark);
+        }
+
+        .value-card {
+            padding: 40px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 4px;
+            height: 100%;
+            transition: border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
+        }
+
+        .value-card:hover {
+            border-color: rgba(197, 160, 89, 0.4);
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+        }
+
+        .value-card__icon {
+            font-size: 28px;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .value-card__title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin: 0 0 16px 0;
+        }
+
+        .value-card__desc {
+            font-size: 14px;
+            line-height: 1.85;
+            color: rgba(255, 255, 255, 0.55);
+            margin: 0;
+        }
+
+        /* ── Process / Timeline ── */
+        .process-section {
+            padding: 120px 0;
+            background: var(--bg-card);
+        }
+
+        .process-timeline {
+            position: relative;
+            margin-top: 64px;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+
+        .process-step {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 56px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .process-step.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .process-step__num {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step__body {
+            padding-top: 12px;
+        }
+
+        .process-step__title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+        }
+
+        .process-step__desc {
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+        }
+
+        /* ── Awards / Recognition ── */
+        .awards-section {
+            padding: 120px 0;
+            background: var(--bg-dark);
+        }
+
+        .award-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease;
+        }
+
+        .award-row:hover {
+            border-color: rgba(197, 160, 89, 0.25);
+        }
+
+        .award-row:hover .award-title {
+            color: var(--accent);
+        }
+
+        .award-year {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: var(--accent);
+            flex-shrink: 0;
+            width: 72px;
+        }
+
+        .award-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.85);
+            flex: 1;
+            padding: 0 24px;
+            transition: color 0.3s ease;
+        }
+
+        .award-body {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            text-align: right;
+            flex-shrink: 0;
+            width: 180px;
+        }
+
+        /* ── CTA banner ── */
+        .about-cta {
+            padding: 120px 0;
+            background: var(--bg-card);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-cta::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-cta__label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .about-cta__heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(28px, 4vw, 52px);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin: 0 0 40px 0;
+            line-height: 1.2;
+        }
+
+        .about-cta__btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 991px) {
+            .philosophy-image-wrap {
+                height: 380px;
+            }
+
+            .process-timeline::before {
+                left: 20px;
+            }
+
+            .process-step__num {
+                width: 40px;
+                height: 40px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .philosophy-section,
+            .values-section,
+            .process-section,
+            .awards-section,
+            .about-cta {
+                padding: 80px 0;
+            }
+
+            .stat-item:not(:last-child)::after {
+                display: none;
+            }
+
+            .award-body {
+                display: none;
+            }
+
+            .award-title {
+                padding: 0 12px;
+            }
+
+            .about-hero__title {
+                font-size: 44px;
+            }
+        }
+
+        /* ── Reduced motion ── */
+        @media (prefers-reduced-motion: reduce) {
+
+            .about-hero__eyebrow,
+            .about-hero__title,
+            .about-hero__desc,
+            .about-hero__scroll {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .process-step {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader" role="status" aria-label="Loading"></div>
+
+    <!-- Scroll to Top -->
+    <div class="progress-wrap cursor-pointer" role="button" aria-label="Scroll to top" tabindex="0">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true">
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
 
-    <!-- Header -->
-    <header class="bauen-header" style="background: rgba(27,27,27,0.95); position:fixed; border-bottom:1px solid rgba(255,255,255,0.05);">
+    <!-- ══ Fixed Navigation ══════════════════════════════════ -->
+    <header class="bauen-header" id="mainHeader" role="banner">
         <div class="container-fluid">
             <div class="row align-items-center">
-                <div class="col-6 col-md-4">
-                    <a href="index.html" class="logo-text">Bauen</a>
+                <div class="col-6 col-md-3">
+                    <a href="index.html" class="logo-text" aria-label="Bauen — Home">Bauen</a>
                 </div>
-                <div class="col-md-4 d-none d-md-block text-center">
-                    <nav class="bauen-nav">
-                        <ul class="main-menu-list">
+                <div class="col-md-6 d-none d-md-block text-center">
+                    <nav class="bauen-nav" aria-label="Primary navigation">
+                        <ul class="main-menu-list" role="list">
                             <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html" class="active">About</a></li>
-                            <li><a href="projects.html">Projects</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li class="menu-dropdown">
+                                <a href="about.html" class="dropdown-trigger active" aria-current="page">About <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                                <ul class="dropdown-menu-list">
+                                    <li><a href="about.html" class="active-dropdown-item">About Us</a></li>
+                                    <li><a href="projects.html">Projects</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="team.html">Team</a></li>
                         </ul>
                     </nav>
                 </div>
-                <div class="col-6 col-md-4 text-end">
-                    <span class="header-phone">+1 203-123-0606</span>
+                <div
+                    class="col-6 col-md-3 text-end d-flex align-items-center justify-content-end gap-3 header-right-wrap">
+                    <span class="header-phone d-none d-lg-inline">+1 203-123-0606</span>
+                    <div class="header-socials" aria-label="Social media links">
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Page Hero -->
-    <section class="subpage-hero animate-on-load">
-        <div class="container">
-            <p class="subpage-subtitle animate-on-load animate-delay-1">Est. 2004</p>
-            <h1 class="subpage-title animate-on-load animate-delay-2">About Us</h1>
-        </div>
-    </section>
+    <main id="main-content">
 
-    <!-- Philosophy Section -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-5 animate-on-load animate-delay-1">
-                    <div class="section-heading-wrapper">
+        <!-- ══ HERO — Spline Particles ══════════════════════════ -->
+        <section class="about-hero" aria-label="About us hero">
+            <!-- Spline 3D Particle Animation -->
+            <iframe class="about-hero__spline" src="spline_particles.html"
+                frameborder="0" width="100%" height="100%" title="Interactive particle animation background"
+                loading="eager" aria-hidden="true"></iframe>
+
+            <!-- Overlay gradient veil -->
+            <div class="about-hero__veil" aria-hidden="true"></div>
+
+            <!-- Hero text content -->
+            <div class="about-hero__content">
+                <p class="about-hero__eyebrow">Est. 2004 — Two Decades of Design</p>
+                <h1 class="about-hero__title">
+                    Where Structure<br><em>Meets</em> Soul
+                </h1>
+                <p class="about-hero__desc">
+                    At Bauen, we believe great architecture is more than the sum of its materials.
+                    It is the intersection of human experience, environmental context, and purposeful beauty.
+                </p>
+            </div>
+
+            <!-- Scroll cue -->
+            <div class="about-hero__scroll" aria-hidden="true">
+                <span>Scroll</span>
+                <div class="about-hero__scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- ══ WHY CHOOSE US (Luxine Inspired) ════════════════════ -->
+        <section class="why-choose-us">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-6">
+                        <div class="why-choose-content">
+                            <!-- Title -->
+                            <div class="section-title">
+                                <h3 class="reveal-on-scroll">
+                                    <i class="fas fa-asterisk"></i> Why Choose Us
+                                </h3>
+                                <h2 class="reveal-on-scroll text-anime">Your Trusted Partner From Start to Finish</h2>
+                                <p class="reveal-on-scroll">We guide you through the design journey with transparency,
+                                    professionalism, and personalized service, ensuring a smooth, enjoyable, and
+                                    stress-free process.</p>
+                            </div>
+
+                            <!-- Icon List -->
+                            <div class="why-choose-items-list reveal-on-scroll">
+                                <div class="why-choose-item">
+                                    <div class="icon-box">
+                                        <i class="fas fa-play"></i>
+                                    </div>
+                                    <div class="why-choose-item-content">
+                                        <h3>Expertise You Can Trust</h3>
+                                        <p>With years of experience and a team of skilled professionals, we deliver
+                                            innovative, functional, and beautifully crafted spaces that exceed
+                                            expectations.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Bars -->
+                            <div class="why-choose-progress-list reveal-on-scroll">
+                                <div class="skills-progress-bar">
+                                    <div class="skillbar" data-percent="85%">
+                                        <div class="skill-data">
+                                            <div class="skill-title">Residential Design</div>
+                                            <div class="skill-no">85%</div>
+                                        </div>
+                                        <div class="skill-progress">
+                                            <div class="count-bar" style="width: 85%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skills-progress-bar">
+                                    <div class="skillbar" data-percent="95%">
+                                        <div class="skill-data">
+                                            <div class="skill-title">Space Planning & Layout</div>
+                                            <div class="skill-no">95%</div>
+                                        </div>
+                                        <div class="skill-progress">
+                                            <div class="count-bar" style="width: 95%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="why-choose-btn reveal-on-scroll">
+                                <a href="contact.html" class="sp-btn" data-cursor-text="Contact">Get in Touch</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <!-- Image Collage -->
+                        <div class="why-choose-images reveal-on-scroll">
+                            <!-- Left Column -->
+                            <div class="why-choose-image-box-1">
+                                <div class="contact-us-circle">
+                                    <a href="contact.html" data-cursor-text="Reach">
+                                        <!-- Placeholder SVG text circle -->
+                                        <svg viewBox="0 0 100 100" width="100" height="100">
+                                            <defs>
+                                                <path id="circle"
+                                                    d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+                                            </defs>
+                                            <text font-size="14" fill="#c5a059"
+                                                font-family="'Space Grotesk', sans-serif" font-weight="600"
+                                                letter-spacing="2">
+                                                <textPath xlink:href="#circle">CONTACT US • CONTACT US •</textPath>
+                                            </text>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="why-choose-image img-tall">
+                                    <img src="img/project1.jpg" alt="Interior Architecture">
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="why-choose-image-box-2">
+                                <div class="why-choose-image img-arch">
+                                    <img src="img/house.jpg" alt="Minimalist Arch Design">
+                                </div>
+                                <div class="why-choose-image img-square">
+                                    <img src="img/office.jpg" alt="Modern Chair">
+                                </div>
+                                <div class="why-choose-counter-box" data-cursor-text="Wow">
+                                    <h2><span class="counter">5000</span>+</h2>
+                                    <h3>Hours of<br>Design Work</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ PHILOSOPHY ════════════════════════════════════════ -->
+        <section class="philosophy-section" aria-labelledby="philosophy-heading">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <!-- Text -->
+                    <div class="col-lg-5 reveal-on-scroll">
                         <p class="section-subheading">Our Philosophy</p>
-                        <h2 class="section-title">Where Structure<br>Meets Soul</h2>
+                        <h2 class="section-title" id="philosophy-heading">
+                            Architecture<br>as Dialogue
+                        </h2>
+                        <span class="section-gold-line" aria-hidden="true"></span>
+                        <p class="philosophy-desc">
+                            For over two decades, we have crafted spaces that breathe, inspire, and endure.
+                            Our multidisciplinary team of architects, designers, and engineers approach every
+                            commission as a unique dialogue — listening deeply to our clients and the
+                            landscapes they inhabit before a single line is drawn.
+                        </p>
+                        <p class="philosophy-desc">
+                            We reject the transactional. Architecture must reconcile the poetic with the
+                            pragmatic, the private with the collective. Every project is an opportunity
+                            to reshape how people inhabit the world.
+                        </p>
+                        <a href="projects.html" class="sp-btn sp-btn-outline" id="view-projects-btn">View Our Work</a>
                     </div>
-                    <p class="philosophy-desc">At Bauen, we believe that great architecture is more than the sum of its materials. It is the intersection of human experience, environmental context, and purposeful beauty. For over two decades, we have crafted spaces that breathe, inspire, and endure.</p>
-                    <p class="philosophy-desc" style="margin-top:20px;">Our multidisciplinary team of architects, designers, and engineers approach every commission as a unique dialogue — listening deeply to our clients and the landscapes they inhabit before a single line is drawn.</p>
-                </div>
-                <div class="col-lg-6 offset-lg-1 animate-on-load animate-delay-2">
-                    <img src="img/house.jpg" alt="Bauen architectural philosophy" style="width:100%;height:480px;object-fit:cover;border-radius:4px;border:1px solid rgba(255,255,255,0.05);">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section style="padding:60px 0; background:#111111; border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04);">
-        <div class="container">
-            <div class="row g-4 text-center">
-                <div class="col-6 col-md-3 animate-on-load animate-delay-1">
-                    <div class="stat-box">
-                        <div class="stat-number">22+</div>
-                        <p class="stat-label">Years of Excellence</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 animate-on-load animate-delay-2">
-                    <div class="stat-box">
-                        <div class="stat-number">184</div>
-                        <p class="stat-label">Projects Completed</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 animate-on-load animate-delay-3">
-                    <div class="stat-box">
-                        <div class="stat-number">36</div>
-                        <p class="stat-label">Design Awards</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 animate-on-load animate-delay-4">
-                    <div class="stat-box">
-                        <div class="stat-number">18</div>
-                        <p class="stat-label">Countries</p>
+                    <!-- Image -->
+                    <div class="col-lg-6 offset-lg-1 reveal-on-scroll">
+                        <figure class="philosophy-image-wrap" style="margin:0;">
+                            <img src="img/house.jpg" alt="Bauen architectural philosophy — interior space study"
+                                loading="lazy">
+                            <figcaption class="philosophy-image-badge" aria-hidden="true">
+                                <p>&#9670; Craft &amp; Intention</p>
+                            </figcaption>
+                        </figure>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Core Values Section -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 animate-on-load animate-delay-1">
-                    <div class="section-heading-wrapper">
+        <!-- ══ STATS ══════════════════════════════════════════════ -->
+        <section class="stats-section" aria-label="Our milestones">
+            <div class="container">
+                <div class="row g-0">
+                    <div class="col-6 col-md-3 reveal-on-scroll">
+                        <div class="stat-item">
+                            <div class="stat-number">
+                                <span class="sp-stat-num" data-target="22" aria-live="polite">0</span>
+                                <span class="stat-suffix" aria-hidden="true">+</span>
+                            </div>
+                            <p class="stat-label">Years of Excellence</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 reveal-on-scroll">
+                        <div class="stat-item">
+                            <div class="stat-number">
+                                <span class="sp-stat-num" data-target="184" aria-live="polite">0</span>
+                            </div>
+                            <p class="stat-label">Projects Completed</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 reveal-on-scroll">
+                        <div class="stat-item">
+                            <div class="stat-number">
+                                <span class="sp-stat-num" data-target="36" aria-live="polite">0</span>
+                            </div>
+                            <p class="stat-label">Design Awards</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 reveal-on-scroll">
+                        <div class="stat-item">
+                            <div class="stat-number">
+                                <span class="sp-stat-num" data-target="18" aria-live="polite">0</span>
+                            </div>
+                            <p class="stat-label">Countries</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CORE VALUES ════════════════════════════════════════ -->
+        <section class="values-section" aria-labelledby="values-heading">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-5 reveal-on-scroll">
                         <p class="section-subheading">What Drives Us</p>
-                        <h2 class="section-title">Core Values</h2>
+                        <h2 class="section-title" id="values-heading">Core Values</h2>
+                        <span class="section-gold-line" aria-hidden="true"></span>
+                        <p class="philosophy-desc">
+                            Our values are not a mission statement — they are the lived principles
+                            that shape every decision we make, from the first sketch to the final detail.
+                        </p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal-on-scroll">
+                        <article class="value-card">
+                            <div class="value-card__icon" aria-hidden="true">&#9670;</div>
+                            <h3 class="value-card__title">Design Excellence</h3>
+                            <p class="value-card__desc">
+                                Every line, every material, every spatial relationship is considered with
+                                rigorous attention. We reject mediocrity and pursue solutions that are both
+                                functionally superior and visually transcendent.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-md-4 reveal-on-scroll">
+                        <article class="value-card">
+                            <div class="value-card__icon" aria-hidden="true">&#9670;</div>
+                            <h3 class="value-card__title">Client Partnership</h3>
+                            <p class="value-card__desc">
+                                Architecture begins with listening. We immerse ourselves in our clients' lives,
+                                ambitions, and contexts — forming partnerships built on trust, transparency,
+                                and a genuine commitment to exceeding expectations.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-md-4 reveal-on-scroll">
+                        <article class="value-card">
+                            <div class="value-card__icon" aria-hidden="true">&#9670;</div>
+                            <h3 class="value-card__title">Sustainability</h3>
+                            <p class="value-card__desc">
+                                We design for the long arc of time — buildings that age gracefully, consume
+                                responsibly, and enrich the communities and ecosystems they inhabit.
+                                Environmental stewardship is never an afterthought.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-md-4 reveal-on-scroll">
+                        <article class="value-card">
+                            <div class="value-card__icon" aria-hidden="true">&#9670;</div>
+                            <h3 class="value-card__title">Contextual Sensitivity</h3>
+                            <p class="value-card__desc">
+                                Great buildings belong to their place. We study the history, culture, and
+                                microclimate of every site, ensuring our work enhances rather than disrupts
+                                the fabric of its surroundings.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-md-4 reveal-on-scroll">
+                        <article class="value-card">
+                            <div class="value-card__icon" aria-hidden="true">&#9670;</div>
+                            <h3 class="value-card__title">Craft &amp; Detail</h3>
+                            <p class="value-card__desc">
+                                The beauty of architecture lives in its details. We collaborate with master
+                                craftspeople, material specialists, and artisans who share our commitment
+                                to quality without compromise.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-md-4 reveal-on-scroll">
+                        <article class="value-card">
+                            <div class="value-card__icon" aria-hidden="true">&#9670;</div>
+                            <h3 class="value-card__title">Innovation</h3>
+                            <p class="value-card__desc">
+                                Tradition informs; it does not constrain. We embrace emerging technologies,
+                                construction methods, and materials — integrating them thoughtfully to
+                                elevate the human experience within built space.
+                            </p>
+                        </article>
                     </div>
                 </div>
             </div>
-            <div class="row g-4 philosophies-wrapper">
-                <div class="col-md-4 animate-on-load animate-delay-1">
-                    <div class="philosophy-item" style="padding:35px;background:#151515;border:1px solid rgba(255,255,255,0.04);border-radius:4px;height:100%;transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='rgba(153,125,84,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.04)'">
-                        <div style="font-size:30px;color:#997d54;margin-bottom:20px;">&#9670;</div>
-                        <h3 class="philosophy-title">Design Excellence</h3>
-                        <p class="philosophy-desc">Every line, every material, every spatial relationship is considered with rigorous attention. We reject mediocrity and pursue solutions that are both functionally superior and visually transcendent.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-on-load animate-delay-2">
-                    <div class="philosophy-item" style="padding:35px;background:#151515;border:1px solid rgba(255,255,255,0.04);border-radius:4px;height:100%;transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='rgba(153,125,84,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.04)'">
-                        <div style="font-size:30px;color:#997d54;margin-bottom:20px;">&#9670;</div>
-                        <h3 class="philosophy-title">Client Partnership</h3>
-                        <p class="philosophy-desc">Architecture begins with listening. We immerse ourselves in our clients' lives, ambitions, and contexts — forming partnerships built on trust, transparency, and a genuine commitment to exceeding expectations.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-on-load animate-delay-3">
-                    <div class="philosophy-item" style="padding:35px;background:#151515;border:1px solid rgba(255,255,255,0.04);border-radius:4px;height:100%;transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='rgba(153,125,84,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.04)'">
-                        <div style="font-size:30px;color:#997d54;margin-bottom:20px;">&#9670;</div>
-                        <h3 class="philosophy-title">Sustainability</h3>
-                        <p class="philosophy-desc">We design for the long arc of time — buildings that age gracefully, consume responsibly, and enrich the communities and ecosystems they inhabit. Environmental stewardship is never an afterthought.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer style="background:#111111; border-top:1px solid rgba(255,255,255,0.05); padding:40px 0;">
+        <!-- ══ PROCESS / TIMELINE ═════════════════════════════════ -->
+        <section class="process-section" aria-labelledby="process-heading">
+            <div class="container">
+                <div class="row align-items-start g-5">
+                    <!-- Left: heading -->
+                    <div class="col-lg-4 reveal-on-scroll">
+                        <p class="section-subheading">How We Work</p>
+                        <h2 class="section-title" id="process-heading">Our Design<br>Process</h2>
+                        <span class="section-gold-line" aria-hidden="true"></span>
+                        <p class="philosophy-desc">
+                            Each commission follows a disciplined yet creative methodology —
+                            ensuring clarity, quality, and surprise at every stage of the journey.
+                        </p>
+                        <a href="contact.html" class="sp-btn" id="start-project-btn">Start a Project</a>
+                    </div>
+
+                    <!-- Right: timeline steps -->
+                    <div class="col-lg-7 offset-lg-1">
+                        <ol class="process-timeline" aria-label="Design process steps">
+                            <li class="process-step reveal-on-scroll">
+                                <div class="process-step__num" aria-hidden="true">01</div>
+                                <div class="process-step__body">
+                                    <h3 class="process-step__title">Discovery &amp; Brief</h3>
+                                    <p class="process-step__desc">
+                                        We begin with an in-depth immersion into your world — your ambitions,
+                                        lifestyle, site constraints, and aspirations — forming a clear and
+                                        inspiring project brief.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="process-step reveal-on-scroll">
+                                <div class="process-step__num" aria-hidden="true">02</div>
+                                <div class="process-step__body">
+                                    <h3 class="process-step__title">Concept Design</h3>
+                                    <p class="process-step__desc">
+                                        Our architects translate the brief into spatial narratives. Multiple
+                                        conceptual directions are explored through sketches, models, and
+                                        mood studies before a preferred scheme is developed.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="process-step reveal-on-scroll">
+                                <div class="process-step__num" aria-hidden="true">03</div>
+                                <div class="process-step__body">
+                                    <h3 class="process-step__title">Design Development</h3>
+                                    <p class="process-step__desc">
+                                        The approved concept is refined in fine detail — materials, structure,
+                                        systems, and specification — co-ordinated across all disciplines into
+                                        a cohesive design document.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="process-step reveal-on-scroll">
+                                <div class="process-step__num" aria-hidden="true">04</div>
+                                <div class="process-step__body">
+                                    <h3 class="process-step__title">Construction &amp; Delivery</h3>
+                                    <p class="process-step__desc">
+                                        We maintain close involvement on site — resolving complexities,
+                                        upholding quality, and ensuring the built reality honours the
+                                        original vision.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="process-step reveal-on-scroll">
+                                <div class="process-step__num" aria-hidden="true">05</div>
+                                <div class="process-step__body">
+                                    <h3 class="process-step__title">Handover &amp; Legacy</h3>
+                                    <p class="process-step__desc">
+                                        Our relationship does not end at handover. We document, photograph,
+                                        and remain available to our clients as their buildings settle
+                                        into life.
+                                    </p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ AWARDS & RECOGNITION ══════════════════════════════ -->
+        <section class="awards-section" aria-labelledby="awards-heading">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-5 reveal-on-scroll">
+                        <p class="section-subheading">Recognition</p>
+                        <h2 class="section-title" id="awards-heading">Awards &amp;<br>Accolades</h2>
+                        <span class="section-gold-line" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div role="list" aria-label="Award list">
+                    <div class="award-row reveal-on-scroll" role="listitem">
+                        <span class="award-year">2024</span>
+                        <span class="award-title">AIA Architecture Award — Residential Category</span>
+                        <span class="award-body">American Institute of Architects</span>
+                    </div>
+                    <div class="award-row reveal-on-scroll" role="listitem">
+                        <span class="award-year">2023</span>
+                        <span class="award-title">RIBA International Prize — Shortlist</span>
+                        <span class="award-body">Royal Institute of British Architects</span>
+                    </div>
+                    <div class="award-row reveal-on-scroll" role="listitem">
+                        <span class="award-year">2022</span>
+                        <span class="award-title">World Architecture Festival — Finalist</span>
+                        <span class="award-body">WAF, Amsterdam</span>
+                    </div>
+                    <div class="award-row reveal-on-scroll" role="listitem">
+                        <span class="award-year">2021</span>
+                        <span class="award-title">Interior Design Best of Year Award</span>
+                        <span class="award-body">Interior Design Magazine</span>
+                    </div>
+                    <div class="award-row reveal-on-scroll" role="listitem">
+                        <span class="award-year">2019</span>
+                        <span class="award-title">Dezeen Award — Architecture Studio of the Year</span>
+                        <span class="award-body">Dezeen</span>
+                    </div>
+                    <div class="award-row reveal-on-scroll" role="listitem">
+                        <span class="award-year">2017</span>
+                        <span class="award-title">Pritzker Emerging Practice Prize</span>
+                        <span class="award-body">Hyatt Foundation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CTA ═══════════════════════════════════════════════ -->
+        <section class="about-cta" aria-labelledby="cta-heading">
+            <div class="container">
+                <div class="reveal-on-scroll">
+                    <p class="about-cta__label">Ready to Begin?</p>
+                    <h2 class="about-cta__heading" id="cta-heading">
+                        Let's Build<br>Something Extraordinary
+                    </h2>
+                    <div class="about-cta__btns">
+                        <a href="contact.html" class="sp-btn" id="cta-contact-btn">Get in Touch</a>
+                        <a href="projects.html" class="sp-btn sp-btn-outline" id="cta-projects-btn">Explore Projects</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ══ FOOTER ════════════════════════════════════════════════ -->
+    <footer class="sp-footer" role="contentinfo">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-4">
-                    <a href="index.html" class="logo-text" style="font-size:20px;">Bauen</a>
+                    <a href="index.html" class="logo-text" style="font-size:18px;" aria-label="Bauen — Home">Bauen</a>
                 </div>
                 <div class="col-md-4 text-center">
-                    <nav>
-                        <ul class="main-menu-list" style="font-size:12px;">
+                    <nav aria-label="Footer navigation">
+                        <ul class="sp-footer-links" role="list">
                             <li><a href="index.html">Home</a></li>
                             <li><a href="about.html">About</a></li>
+                            <li><a href="team.html">Team</a></li>
                             <li><a href="projects.html">Projects</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
@@ -167,6 +1068,46 @@
 
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/plugins.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="js/custom.js"></script>
+    <script>
+        // === Process step scroll reveal (left-slide variant) ===
+        document.addEventListener('DOMContentLoaded', () => {
+            const steps = document.querySelectorAll('.process-step');
+            const stepObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        // stagger each step slightly
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, 80 * Array.from(steps).indexOf(entry.target));
+                        stepObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+            steps.forEach(step => stepObserver.observe(step));
+
+            // Progress wrap scroll-to-top
+            const progressWrap = document.querySelector('.progress-wrap');
+            if (progressWrap) {
+                progressWrap.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        progressWrap.style.opacity = '1';
+                        progressWrap.style.visibility = 'visible';
+                        progressWrap.style.transform = 'translateY(0)';
+                    } else {
+                        progressWrap.style.opacity = '0';
+                        progressWrap.style.visibility = 'hidden';
+                        progressWrap.style.transform = 'translateY(20px)';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>

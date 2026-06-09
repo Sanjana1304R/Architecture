@@ -10,13 +10,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Didact+Gothic&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap">
 
     <link rel="stylesheet" href="css/plugins.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body class="slider-page-body">
+<body>
+
+
 
     <div id="preloader"></div>
 
@@ -26,98 +29,453 @@
         </svg>
     </div>
 
-    <header class="bauen-header">
+    <!-- Fixed Navigation -->
+    <header class="bauen-header" id="mainHeader">
         <div class="container-fluid">
             <div class="row align-items-center">
-                <div class="col-6 col-md-4">
+                <div class="col-6 col-md-3">
                     <a href="index.html" class="logo-text">Bauen</a>
                 </div>
-                <div class="col-md-4 d-none d-md-block text-center">
+                <div class="col-md-6 d-none d-md-block text-center">
                     <nav class="bauen-nav">
                         <ul class="main-menu-list">
                             <li><a href="index.html" class="active">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="projects.html">Projects</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li class="menu-dropdown">
+                                <a href="about.html" class="dropdown-trigger">About <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
+                                <ul class="dropdown-menu-list">
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="projects.html">Projects</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="team.html">Team</a></li>
                         </ul>
                     </nav>
                 </div>
-                <div class="col-6 col-md-4 text-end">
-                    <span class="header-phone">+1 203-123-0606</span>
+                <div
+                    class="col-6 col-md-3 text-end d-flex align-items-center justify-content-end gap-3 header-right-wrap">
+                    <span class="header-phone d-none d-lg-inline">+1 203-123-0606</span>
+                    <div class="header-socials">
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i
+                                class="fa-brands fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="main-hero-viewport">
+    <!-- ===================== SECTION 1: HERO SLIDER ===================== -->
+    <section id="home" class="main-hero-viewport">
         <div class="antigravity-slider-container" id="renovationSlider">
 
-            <div class="image-layer before-layer" id="beforeLayer">
-                <!-- Base photo with Ken Burns zoom -->
-                <img src="img/before_empty_land.jpg" alt="Empty Plot Before Construction" class="before-photo">
-                <!-- Cold blue cinematic tint overlay -->
-                <div class="before-tint"></div>
-                <!-- Radial vignette -->
-                <div class="before-vignette"></div>
-                <!-- Film grain noise -->
-                <div class="before-grain"></div>
-                <!-- Horizontal light scanner sweep -->
-                <div class="before-scanner"></div>
-                <!-- Animated dust particles -->
-                <div class="before-particles">
-                    <span class="dust-p" style="left:8%;animation-delay:0s;animation-duration:8s"></span>
-                    <span class="dust-p" style="left:19%;animation-delay:1.2s;animation-duration:11s"></span>
-                    <span class="dust-p" style="left:33%;animation-delay:2.4s;animation-duration:9s"></span>
-                    <span class="dust-p" style="left:47%;animation-delay:0.7s;animation-duration:13s"></span>
-                    <span class="dust-p" style="left:61%;animation-delay:3.1s;animation-duration:7s"></span>
-                    <span class="dust-p" style="left:74%;animation-delay:1.8s;animation-duration:10s"></span>
-                    <span class="dust-p" style="left:88%;animation-delay:0.3s;animation-duration:12s"></span>
-                    <span class="dust-p" style="left:55%;animation-delay:4.5s;animation-duration:8.5s"></span>
-                    <span class="dust-p" style="left:25%;animation-delay:5s;animation-duration:14s"></span>
-                    <span class="dust-p" style="left:92%;animation-delay:2s;animation-duration:9.5s"></span>
-                </div>
-                <!-- Cinematic badge -->
-                <div class="before-cinema-badge">
-                    <span class="badge-dot"></span>
-                    <span class="badge-label">Before Construction</span>
-                </div>
-            </div>
 
             <div class="image-layer luxury-layer" id="plainLayer">
-                <!-- Base photo with reverse Ken Burns zoom -->
-                <img src="img/house.jpg" alt="Luxury Architectural Transformation Render" class="luxury-photo">
-                <!-- Warm golden cinematic tint -->
-                <div class="luxury-tint"></div>
-                <!-- Soft warm vignette -->
-                <div class="luxury-vignette"></div>
-                <!-- Luxury badge -->
-                <div class="luxury-cinema-badge">
+                <canvas id="luxuryCanvas"
+                    style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; pointer-events: none; z-index: 1;"></canvas>
+                <img src="img/house.jpg" alt="Luxury Architectural Transformation Render" class="luxury-photo"
+                    id="luxuryFallbackImg"
+                    style="z-index: 2; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; pointer-events: none; opacity: 1; transition: opacity 0.5s ease;">
+                <div class="luxury-tint" style="z-index: 3;"></div>
+                <div class="luxury-vignette" style="z-index: 3;"></div>
+                <div class="luxury-cinema-badge" style="z-index: 4;">
                     <span class="luxury-badge-dot"></span>
                     <span class="luxury-badge-label">Luxury Render</span>
                 </div>
-            </div>
-
-            <div class="hero-caption-box">
-                <div class="subtitle-tag animate-on-load animate-delay-1">Innovation Concept</div>
-                <h1 class="hero-title-text animate-on-load animate-delay-2">Modern Luxury<br>Residence</h1>
-            </div>
-
-            <div class="slider-handle" id="sliderHandle">
-                <div class="handle-line"></div>
-                <div class="handle-button">
-                    <span class="arrow-icon">&#8592;</span>
-                    <span class="arrow-icon">&#8594;</span>
+                <!-- Premium Glassmorphic Frame Preloader -->
+                <div id="framePreloader"
+                    style="position: absolute; bottom: 100px; left: 40px; display: flex; flex-direction: column; gap: 8px; z-index: 10; background: rgba(14, 14, 14, 0.65); border: 1px solid rgba(255, 255, 255, 0.08); padding: 15px 24px; backdrop-filter: blur(12px); border-radius: 4px; min-width: 260px; transition: opacity 0.5s ease, visibility 0.5s ease;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span
+                            style="font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent);">Interactive
+                            View</span>
+                        <span id="preloadPercentage"
+                            style="font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; color: #fff;">0%</span>
+                    </div>
+                    <div
+                        style="width: 100%; height: 2px; background: rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; border-radius: 1px;">
+                        <div id="preloadProgressBar"
+                            style="width: 0%; height: 100%; background: var(--accent); transition: width 0.1s ease;">
+                        </div>
+                    </div>
                 </div>
-                <div class="handle-line"></div>
+            </div>
+
+            <div class="hero-caption-container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-10 text-start">
+                            <div class="subtitle-tag animate-on-load animate-delay-1">Innovation Concept</div>
+                            <h1 class="hero-title-text animate-on-load animate-delay-2">Modern Luxury<br>Residence</h1>
+                            <p class="hero-desc animate-on-load animate-delay-3">We redefine luxury architecture by
+                                transforming raw environments into sustainable, breath-taking landmarks that inspire
+                                everyday life.</p>
+                            <div class="hero-btn-wrap animate-on-load animate-delay-4">
+                                <a href="#about" class="sp-btn">Discover Bauen</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scroll</span>
+            <span class="scroll-line"></span>
+        </div>
+    </section>
+
+    <!-- ===================== SECTION 2: ABOUT US — Image Left / Content+Spline Right ===================== -->
+    <section id="about" class="sp-about-split"
+        style="border-top: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03); overflow: hidden;">
+        <div class="row g-0 align-items-stretch">
+
+            <!-- Left: Dark-Mode Architectural Floor Plan -->
+            <div class="col-lg-6"
+                style="position: relative; min-height: 50vh; display: flex; align-items: center; justify-content: center; background-color: var(--bg-dark);">
+                <img src="img/floorplan_dark.png" alt="Luxury Architectural Apartment Floor Plan"
+                    style="width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0; padding: 40px; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));">
+            </div>
+
+            <!-- Right: Content overlaid on Spline Animation -->
+            <div class="col-lg-6 sp-about-text-col"
+                style="position: relative; display: flex; align-items: center; overflow: hidden;">
+                <!-- Spline 3D Particle Animation as Background -->
+                <iframe src="spline_particles.html" frameborder="0"
+                    style="position: absolute; inset: 0; width: 100%; height: 100%; border: none; pointer-events: none; z-index: 1;"
+                    title="3D particle animation background" loading="lazy" aria-hidden="true"></iframe>
+                <!-- Dark fade so text is readable over the particles -->
+                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.4) 100%); z-index: 2;"
+                    aria-hidden="true"></div>
+
+                <!-- Text Content -->
+                <div class="reveal-on-scroll" style="position: relative; z-index: 3;">
+                    <p class="sp-label">Who We Are</p>
+                    <h2 class="sp-heading">Where Structure<br>Meets Soul</h2>
+                    <div class="sp-divider"></div>
+                    <p class="sp-body">At Bauen, we believe that great architecture is more than the sum of its
+                        materials. It is the intersection of human experience, environmental context, and purposeful
+                        beauty.</p>
+                    <p class="sp-body">For over two decades, we have crafted spaces that breathe, inspire, and endure.
+                        Our multidisciplinary team approaches every commission as a unique dialogue.</p>
+                    <a href="about.html" class="sp-btn" id="about-discover-btn">Discover Our Story</a>
+                </div>
             </div>
 
         </div>
-    </main>
+    </section>
 
-    <footer class="bauen-footer-bottom">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 text-center text-md-start">
+    <!-- Stats Bar -->
+    <section class="sp-stats-bar">
+        <div class="container">
+            <div class="row g-0 text-center">
+                <div class="col-6 col-md-3 reveal-on-scroll">
+                    <div class="sp-stat">
+                        <span class="sp-stat-num" data-target="22">0</span><span class="sp-stat-suffix">+</span>
+                        <p class="sp-stat-label">Years of Excellence</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 reveal-on-scroll">
+                    <div class="sp-stat">
+                        <span class="sp-stat-num" data-target="184">0</span>
+                        <p class="sp-stat-label">Projects Completed</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 reveal-on-scroll">
+                    <div class="sp-stat">
+                        <span class="sp-stat-num" data-target="36">0</span>
+                        <p class="sp-stat-label">Design Awards</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 reveal-on-scroll">
+                    <div class="sp-stat">
+                        <span class="sp-stat-num" data-target="18">0</span>
+                        <p class="sp-stat-label">Countries</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SECTION 3: TEAM ===================== -->
+    <section id="team" class="sp-section sp-team">
+        <div class="container">
+            <div class="text-center reveal-on-scroll">
+                <p class="sp-label">Our People</p>
+                <h2 class="sp-heading">The Creative Minds</h2>
+                <div class="sp-divider sp-divider-center"></div>
+            </div>
+            <div class="row g-4 sp-team-grid">
+                <div class="col-md-6 col-lg-3 reveal-on-scroll">
+                    <div class="sp-team-card">
+                        <div class="sp-team-img-wrap">
+                            <img src="img/team.png" alt="Marcus Reid">
+                            <div class="sp-team-overlay">
+                                <div class="sp-team-socials">
+                                    <a href="#">Li</a> <a href="#">Tw</a> <a href="#">Ig</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sp-team-info">
+                            <h4>Marcus Reid</h4>
+                            <p>Founder & Lead Architect</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 reveal-on-scroll">
+                    <div class="sp-team-card">
+                        <div class="sp-team-img-wrap">
+                            <img src="img/team.png" alt="Elena Vasquez">
+                            <div class="sp-team-overlay">
+                                <div class="sp-team-socials">
+                                    <a href="#">Li</a> <a href="#">Tw</a> <a href="#">Ig</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sp-team-info">
+                            <h4>Elena Vasquez</h4>
+                            <p>Design Director</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 reveal-on-scroll">
+                    <div class="sp-team-card">
+                        <div class="sp-team-img-wrap">
+                            <img src="img/team.png" alt="James Okoro">
+                            <div class="sp-team-overlay">
+                                <div class="sp-team-socials">
+                                    <a href="#">Li</a> <a href="#">Tw</a> <a href="#">Ig</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sp-team-info">
+                            <h4>James Okoro</h4>
+                            <p>Senior Engineer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 reveal-on-scroll">
+                    <div class="sp-team-card">
+                        <div class="sp-team-img-wrap">
+                            <img src="img/team.png" alt="Sofia Chen">
+                            <div class="sp-team-overlay">
+                                <div class="sp-team-socials">
+                                    <a href="#">Li</a> <a href="#">Tw</a> <a href="#">Ig</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sp-team-info">
+                            <h4>Sofia Chen</h4>
+                            <p>Interior Specialist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===================== SECTION 5: GALLERY ===================== -->
+    <section id="gallery" class="sp-section sp-gallery">
+        <div class="container">
+            <div class="text-center reveal-on-scroll">
+                <p class="sp-label">Our Work</p>
+                <h2 class="sp-heading">Project Gallery</h2>
+                <div class="sp-divider sp-divider-center"></div>
+            </div>
+            <div class="sp-gallery-grid reveal-on-scroll">
+                <div class="sp-gallery-item sp-gallery-wide">
+                    <img src="img/project1.jpg" alt="Modern Villa">
+                    <div class="sp-gallery-overlay">
+                        <span class="sp-gallery-cat">Residential</span>
+                        <h4>Modern Villa</h4>
+                    </div>
+                </div>
+                <div class="sp-gallery-item">
+                    <img src="img/project2.jpg" alt="Urban Loft">
+                    <div class="sp-gallery-overlay">
+                        <span class="sp-gallery-cat">Commercial</span>
+                        <h4>Urban Loft</h4>
+                    </div>
+                </div>
+                <div class="sp-gallery-item">
+                    <img src="img/gallery1.png" alt="Luxury Interior">
+                    <div class="sp-gallery-overlay">
+                        <span class="sp-gallery-cat">Interior</span>
+                        <h4>Luxury Interior</h4>
+                    </div>
+                </div>
+                <div class="sp-gallery-item sp-gallery-wide">
+                    <img src="img/project3.jpg" alt="Skyline Tower">
+                    <div class="sp-gallery-overlay">
+                        <span class="sp-gallery-cat">High-Rise</span>
+                        <h4>Skyline Tower</h4>
+                    </div>
+                </div>
+                <div class="sp-gallery-item">
+                    <img src="img/house.jpg" alt="Country Estate">
+                    <div class="sp-gallery-overlay">
+                        <span class="sp-gallery-cat">Estate</span>
+                        <h4>Country Estate</h4>
+                    </div>
+                </div>
+                <div class="sp-gallery-item">
+                    <img src="img/project1.jpg" alt="Minimalist Home">
+                    <div class="sp-gallery-overlay">
+                        <span class="sp-gallery-cat">Minimalist</span>
+                        <h4>Minimalist Home</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- View All Projects Button -->
+            <div class="text-center mt-5 reveal-on-scroll">
+                <a href="projects.html" class="sp-btn sp-btn-outline">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SECTION 6: QUERIES / FAQ ===================== -->
+    <section id="queries" class="sp-section sp-queries">
+        <div class="container">
+            <div class="row align-items-start g-5">
+                <div class="col-lg-5 reveal-on-scroll">
+                    <p class="sp-label">FAQ</p>
+                    <h2 class="sp-heading">Common<br>Questions</h2>
+                    <div class="sp-divider"></div>
+                    <p class="sp-body">Everything you need to know about working with Bauen. Can't find what you're
+                        looking for? Reach out to us directly.</p>
+                </div>
+                <div class="col-lg-6 offset-lg-1 reveal-on-scroll">
+                    <div class="sp-faq-list">
+                        <div class="sp-faq-item">
+                            <div class="sp-faq-q" onclick="this.parentElement.classList.toggle('open')">
+                                <span>How long does a typical project take?</span>
+                                <span class="sp-faq-icon">+</span>
+                            </div>
+                            <div class="sp-faq-a">
+                                <p>Timelines vary depending on scope. A residential project typically takes 4–8 months
+                                    from concept to completion, while larger commercial projects may span 12–24 months.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="sp-faq-item">
+                            <div class="sp-faq-q" onclick="this.parentElement.classList.toggle('open')">
+                                <span>Do you handle construction management?</span>
+                                <span class="sp-faq-icon">+</span>
+                            </div>
+                            <div class="sp-faq-a">
+                                <p>Yes. Our Premium and Bespoke plans include full construction oversight, ensuring the
+                                    built result matches our designs precisely.</p>
+                            </div>
+                        </div>
+                        <div class="sp-faq-item">
+                            <div class="sp-faq-q" onclick="this.parentElement.classList.toggle('open')">
+                                <span>What is your design process?</span>
+                                <span class="sp-faq-icon">+</span>
+                            </div>
+                            <div class="sp-faq-a">
+                                <p>We follow a four-phase approach: Discovery, Concept Design, Development, and
+                                    Delivery. Each phase includes client reviews and approvals before proceeding.</p>
+                            </div>
+                        </div>
+                        <div class="sp-faq-item">
+                            <div class="sp-faq-q" onclick="this.parentElement.classList.toggle('open')">
+                                <span>Do you work internationally?</span>
+                                <span class="sp-faq-icon">+</span>
+                            </div>
+                            <div class="sp-faq-a">
+                                <p>Absolutely. We have completed projects across 18 countries and maintain partnerships
+                                    with local contractors and regulatory specialists worldwide.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SECTION 7: CONTACT ===================== -->
+    <section id="contact" class="sp-section sp-contact">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-5 reveal-on-scroll">
+                    <p class="sp-label">Get In Touch</p>
+                    <h2 class="sp-heading">Start Your<br>Vision</h2>
+                    <div class="sp-divider"></div>
+                    <div class="sp-contact-details">
+                        <div class="sp-contact-item">
+                            <span class="sp-contact-icon">&#9670;</span>
+                            <div>
+                                <h5>Visit Us</h5>
+                                <p>120 Arcadia Avenue, Suite 400<br>New York, NY 10013</p>
+                            </div>
+                        </div>
+                        <div class="sp-contact-item">
+                            <span class="sp-contact-icon">&#9670;</span>
+                            <div>
+                                <h5>Call Us</h5>
+                                <p>+1 203-123-0606</p>
+                            </div>
+                        </div>
+                        <div class="sp-contact-item">
+                            <span class="sp-contact-icon">&#9670;</span>
+                            <div>
+                                <h5>Email</h5>
+                                <p>studio@bauen.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1 reveal-on-scroll">
+                    <form class="sp-form" id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" placeholder="Your Name" class="sp-input" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" placeholder="Your Email" class="sp-input" required>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" placeholder="Subject" class="sp-input">
+                            </div>
+                            <div class="col-12">
+                                <textarea placeholder="Tell us about your project..."
+                                    class="sp-input sp-textarea"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="sp-btn sp-btn-full">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="sp-footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <a href="#home" class="logo-text" style="font-size:20px;">Bauen</a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <nav>
+                        <ul class="sp-footer-links">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#team">Team</a></li>
+                            <li><a href="#gallery">Gallery</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-4 text-end">
                     <p class="copyright-text">&copy; 2026 <a href="#">Bauen</a>. All rights reserved.</p>
                 </div>
             </div>
@@ -126,6 +484,7 @@
 
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/plugins.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="js/custom.js"></script>
 </body>
 
