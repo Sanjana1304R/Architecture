@@ -159,23 +159,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // === WebP Frame Animation Player ===
         const canvas = document.getElementById("luxuryCanvas");
-        const framePreloader = document.getElementById("framePreloader");
-        const preloadPercentage = document.getElementById("preloadPercentage");
-        const preloadProgressBar = document.getElementById("preloadProgressBar");
 
         if (canvas) {
             const ctx = canvas.getContext("2d");
             let frameImages = [];
-            let isLoaded = false;
             let currentFrameIndex = 0;
             let lastFrameTime = 0;
             const fps = 24;
             const frameInterval = 1000 / fps;
-            let animationFrameId = null;
+            let animationStarted = false;
+            let isPaused = false;
 
             // Handle DPI
             const dpr = window.devicePixelRatio || 1;
-            
+
             const resizeCanvas = () => {
                 canvas.width = window.innerWidth * dpr;
                 canvas.height = window.innerHeight * dpr;
@@ -200,7 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 cw = iw / (nw / w);
                 ch = ih / (nh / h);
-
                 cx = (iw - cw) * 0.5;
                 cy = (ih - ch) * 0.5;
 
@@ -219,97 +215,61 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             };
 
-            let isPaused = false;
-
-            const startFrameLoop = (timestamp) => {
+            const frameLoop = (timestamp) => {
                 if (isPaused) {
-                    animationFrameId = requestAnimationFrame(startFrameLoop);
+                    requestAnimationFrame(frameLoop);
                     return;
                 }
 
                 if (!lastFrameTime) lastFrameTime = timestamp;
                 const elapsed = timestamp - lastFrameTime;
-
-                // Only play when the section is in viewport to save CPU/battery
                 const inViewport = window.scrollY < window.innerHeight;
 
                 if (inViewport && elapsed >= frameInterval) {
-                    if (currentFrameIndex === frameImages.length - 1) {
-                        drawCurrentFrame();
+                    const nextIndex = currentFrameIndex + 1;
+
+                    if (nextIndex >= frameImages.length) {
+                        // All loaded frames played — pause then restart
                         isPaused = true;
                         setTimeout(() => {
                             currentFrameIndex = 0;
                             isPaused = false;
                             lastFrameTime = performance.now();
-                        }, 4000); // Pause on the completed house render for at least 4 seconds
-                    } else {
-                        currentFrameIndex++;
+                        }, 4000);
+                    } else if (frameImages[nextIndex] && frameImages[nextIndex].complete) {
+                        currentFrameIndex = nextIndex;
                         drawCurrentFrame();
                     }
                     lastFrameTime = timestamp - (elapsed % frameInterval);
                 }
-                
-                animationFrameId = requestAnimationFrame(startFrameLoop);
+
+                requestAnimationFrame(frameLoop);
             };
 
-            // Preload WebP frames
+            // Set up canvas size immediately
+            resizeCanvas();
+
+            // Load frames and start animation as soon as first frame is ready
             fetch("js/frames.json")
                 .then(res => res.json())
                 .then(frameFiles => {
-                    let loadedCount = 0;
-                    const totalFrames = frameFiles.length;
-
                     frameFiles.forEach((file, index) => {
                         const img = new Image();
                         img.src = `file/${file}`;
                         img.onload = () => {
-                            loadedCount++;
-                            const pct = Math.round((loadedCount / totalFrames) * 100);
-                            if (preloadPercentage) preloadPercentage.textContent = `${pct}%`;
-                            if (preloadProgressBar) preloadProgressBar.style.width = `${pct}%`;
-
-                            if (loadedCount === totalFrames) {
-                                isLoaded = true;
-                                currentFrameIndex = 0; // Start from frame_000 (blueprint)
-                                resizeCanvas();
-                                
-                                // Smooth transition
-                                if (framePreloader) {
-                                    framePreloader.style.opacity = "0";
-                                    framePreloader.style.visibility = "hidden";
-                                    setTimeout(() => framePreloader.style.display = "none", 500);
-                                }
-                                // (fallback image removed)
-
-                                requestAnimationFrame(startFrameLoop);
-                            }
-                        };
-                        img.onerror = () => {
-                            // Skip broken frames but keep loading
-                            loadedCount++;
-                            if (loadedCount === totalFrames) {
-                                isLoaded = true;
-                                currentFrameIndex = 0; // Start from frame_000 (blueprint)
-                                resizeCanvas();
-                                if (framePreloader) {
-                                    framePreloader.style.opacity = "0";
-                                    framePreloader.style.visibility = "hidden";
-                                    setTimeout(() => framePreloader.style.display = "none", 500);
-                                }
-                                // (fallback image removed)
-                                requestAnimationFrame(startFrameLoop);
+                            // Kick off the loop the moment frame 0 is ready
+                            if (index === 0 && !animationStarted) {
+                                animationStarted = true;
+                                drawCurrentFrame();
+                                requestAnimationFrame(frameLoop);
                             }
                         };
                         frameImages[index] = img;
                     });
                 })
-                .catch(err => {
-                    console.error("Failed to load animation frames:", err);
-                    if (framePreloader) framePreloader.style.display = "none";
-                });
+                .catch(err => console.error("Failed to load animation frames:", err));
 
             window.addEventListener("resize", resizeCanvas);
-            resizeCanvas();
         }
 
     // === Scroll-based Reveal ===
