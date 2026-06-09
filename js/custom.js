@@ -159,12 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // === WebP Frame Animation Player ===
         const canvas = document.getElementById("luxuryCanvas");
-        const fallbackImg = document.getElementById("luxuryFallbackImg");
         const framePreloader = document.getElementById("framePreloader");
         const preloadPercentage = document.getElementById("preloadPercentage");
         const preloadProgressBar = document.getElementById("preloadProgressBar");
 
-        if (canvas && fallbackImg) {
+        if (canvas) {
             const ctx = canvas.getContext("2d");
             let frameImages = [];
             let isLoaded = false;
@@ -280,10 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     framePreloader.style.visibility = "hidden";
                                     setTimeout(() => framePreloader.style.display = "none", 500);
                                 }
-                                if (fallbackImg) {
-                                    fallbackImg.style.opacity = "0";
-                                    setTimeout(() => fallbackImg.style.display = "none", 500);
-                                }
+                                // (fallback image removed)
 
                                 requestAnimationFrame(startFrameLoop);
                             }
@@ -300,10 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     framePreloader.style.visibility = "hidden";
                                     setTimeout(() => framePreloader.style.display = "none", 500);
                                 }
-                                if (fallbackImg) {
-                                    fallbackImg.style.opacity = "0";
-                                    setTimeout(() => fallbackImg.style.display = "none", 500);
-                                }
+                                // (fallback image removed)
                                 requestAnimationFrame(startFrameLoop);
                             }
                         };
@@ -312,8 +305,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(err => {
                     console.error("Failed to load animation frames:", err);
-                    // Fallback to static image
-                    if (fallbackImg) fallbackImg.style.opacity = "1";
                     if (framePreloader) framePreloader.style.display = "none";
                 });
 
