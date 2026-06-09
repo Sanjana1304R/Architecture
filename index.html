@@ -23,9 +23,10 @@
 
     <div id="preloader"></div>
 
-    <div class="progress-wrap cursor-pointer">
-        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    <div class="progress-wrap cursor-pointer" role="button" aria-label="Scroll to top" tabindex="0">
+        <svg class="up-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
         </svg>
     </div>
 
@@ -43,7 +44,6 @@
                             <li class="menu-dropdown">
                                 <a href="about.html" class="dropdown-trigger">About <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
                                 <ul class="dropdown-menu-list">
-                                    <li><a href="about.html">About Us</a></li>
                                     <li><a href="projects.html">Projects</a></li>
                                 </ul>
                             </li>
@@ -53,7 +53,7 @@
                 </div>
                 <div
                     class="col-6 col-md-3 text-end d-flex align-items-center justify-content-end gap-3 header-right-wrap">
-                    <span class="header-phone d-none d-lg-inline">+1 203-123-0606</span>
+                    
                     <div class="header-socials">
                         <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i
                                 class="fa-brands fa-facebook-f"></i></a>
@@ -280,58 +280,28 @@
 
 
 
-    <!-- ===================== SECTION 5: GALLERY ===================== -->
-    <section id="gallery" class="sp-section sp-gallery">
+    <!-- ===================== SECTION 5: PROJECT GALLERY ===================== -->
+    <section id="gallery" class="sp-section sp-gallery" aria-labelledby="gallery-heading">
         <div class="container">
             <div class="text-center reveal-on-scroll">
                 <p class="sp-label">Our Work</p>
-                <h2 class="sp-heading">Project Gallery</h2>
+                <h2 class="sp-heading" id="gallery-heading">Project Gallery</h2>
                 <div class="sp-divider sp-divider-center"></div>
             </div>
-            <div class="sp-gallery-grid reveal-on-scroll">
-                <div class="sp-gallery-item sp-gallery-wide">
-                    <img src="img/project1.jpg" alt="Modern Villa">
-                    <div class="sp-gallery-overlay">
-                        <span class="sp-gallery-cat">Residential</span>
-                        <h4>Modern Villa</h4>
-                    </div>
+            <!-- Single Big Project Image -->
+            <article class="project-hero-single reveal-on-scroll">
+                <div class="project-hero-single__image">
+                    <a href="projects.html">
+                        <img src="img/project1.jpg" alt="Modern Villa — Featured Project" loading="lazy">
+                    </a>
                 </div>
-                <div class="sp-gallery-item">
-                    <img src="img/project2.jpg" alt="Urban Loft">
-                    <div class="sp-gallery-overlay">
-                        <span class="sp-gallery-cat">Commercial</span>
-                        <h4>Urban Loft</h4>
-                    </div>
+                <div class="project-hero-single__content">
+                    <h3><a href="projects.html">Modern Villa</a></h3>
+                    <ul>
+                        <li>Residential Interior</li>
+                    </ul>
                 </div>
-                <div class="sp-gallery-item">
-                    <img src="img/gallery1.png" alt="Luxury Interior">
-                    <div class="sp-gallery-overlay">
-                        <span class="sp-gallery-cat">Interior</span>
-                        <h4>Luxury Interior</h4>
-                    </div>
-                </div>
-                <div class="sp-gallery-item sp-gallery-wide">
-                    <img src="img/project3.jpg" alt="Skyline Tower">
-                    <div class="sp-gallery-overlay">
-                        <span class="sp-gallery-cat">High-Rise</span>
-                        <h4>Skyline Tower</h4>
-                    </div>
-                </div>
-                <div class="sp-gallery-item">
-                    <img src="img/house.jpg" alt="Country Estate">
-                    <div class="sp-gallery-overlay">
-                        <span class="sp-gallery-cat">Estate</span>
-                        <h4>Country Estate</h4>
-                    </div>
-                </div>
-                <div class="sp-gallery-item">
-                    <img src="img/project1.jpg" alt="Minimalist Home">
-                    <div class="sp-gallery-overlay">
-                        <span class="sp-gallery-cat">Minimalist</span>
-                        <h4>Minimalist Home</h4>
-                    </div>
-                </div>
-            </div>
+            </article>
             <!-- View All Projects Button -->
             <div class="text-center mt-5 reveal-on-scroll">
                 <a href="projects.html" class="sp-btn sp-btn-outline">View All Projects</a>
@@ -460,24 +430,8 @@
     <!-- Footer -->
     <footer class="sp-footer">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <a href="#home" class="logo-text" style="font-size:20px;">Bauen</a>
-                </div>
-                <div class="col-md-4 text-center">
-                    <nav>
-                        <ul class="sp-footer-links">
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#team">Team</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-md-4 text-end">
-                    <p class="copyright-text">&copy; 2026 <a href="#">Bauen</a>. All rights reserved.</p>
-                </div>
+            <div class="text-center">
+                <p class="copyright-text">&copy; 2026 <a href="#">Bauen</a>. All rights reserved.</p>
             </div>
         </div>
     </footer>

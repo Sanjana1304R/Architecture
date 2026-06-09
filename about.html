@@ -19,7 +19,7 @@
            ABOUT PAGE — Spline Hero + Section Overrides
            ============================================================ */
 
-        /* ── Spline Particle Hero ── */
+        /* ── Hero Background Image ── */
         .about-hero {
             position: relative;
             width: 100%;
@@ -29,17 +29,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .about-hero__spline {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            pointer-events: none;
-            /* overlay text stays clickable */
-            z-index: 0;
+            background-image: url('img/about_hero.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         /* Dark gradient veil so text remains legible */
@@ -551,8 +544,9 @@
 
     <!-- Scroll to Top -->
     <div class="progress-wrap cursor-pointer" role="button" aria-label="Scroll to top" tabindex="0">
-        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        <svg class="up-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
         </svg>
     </div>
 
@@ -570,7 +564,6 @@
                             <li class="menu-dropdown">
                                 <a href="about.html" class="dropdown-trigger active" aria-current="page">About <i class="fa-solid fa-chevron-down dropdown-icon"></i></a>
                                 <ul class="dropdown-menu-list">
-                                    <li><a href="about.html" class="active-dropdown-item">About Us</a></li>
                                     <li><a href="projects.html">Projects</a></li>
                                 </ul>
                             </li>
@@ -580,7 +573,6 @@
                 </div>
                 <div
                     class="col-6 col-md-3 text-end d-flex align-items-center justify-content-end gap-3 header-right-wrap">
-                    <span class="header-phone d-none d-lg-inline">+1 203-123-0606</span>
                     <div class="header-socials" aria-label="Social media links">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
                             aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
@@ -594,140 +586,22 @@
 
     <main id="main-content">
 
-        <!-- ══ HERO — Spline Particles ══════════════════════════ -->
-        <section class="about-hero" aria-label="About us hero">
-            <!-- Spline 3D Particle Animation -->
-            <iframe class="about-hero__spline" src="spline_particles.html"
-                frameborder="0" width="100%" height="100%" title="Interactive particle animation background"
-                loading="eager" aria-hidden="true"></iframe>
-
-            <!-- Overlay gradient veil -->
-            <div class="about-hero__veil" aria-hidden="true"></div>
-
-            <!-- Hero text content -->
-            <div class="about-hero__content">
-                <p class="about-hero__eyebrow">Est. 2004 — Two Decades of Design</p>
-                <h1 class="about-hero__title">
-                    Where Structure<br><em>Meets</em> Soul
-                </h1>
-                <p class="about-hero__desc">
-                    At Bauen, we believe great architecture is more than the sum of its materials.
-                    It is the intersection of human experience, environmental context, and purposeful beauty.
-                </p>
-            </div>
-
-            <!-- Scroll cue -->
-            <div class="about-hero__scroll" aria-hidden="true">
-                <span>Scroll</span>
-                <div class="about-hero__scroll-line"></div>
-            </div>
-        </section>
-
-        <!-- ══ WHY CHOOSE US (Luxine Inspired) ════════════════════ -->
-        <section class="why-choose-us">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-6">
-                        <div class="why-choose-content">
-                            <!-- Title -->
-                            <div class="section-title">
-                                <h3 class="reveal-on-scroll">
-                                    <i class="fas fa-asterisk"></i> Why Choose Us
-                                </h3>
-                                <h2 class="reveal-on-scroll text-anime">Your Trusted Partner From Start to Finish</h2>
-                                <p class="reveal-on-scroll">We guide you through the design journey with transparency,
-                                    professionalism, and personalized service, ensuring a smooth, enjoyable, and
-                                    stress-free process.</p>
-                            </div>
-
-                            <!-- Icon List -->
-                            <div class="why-choose-items-list reveal-on-scroll">
-                                <div class="why-choose-item">
-                                    <div class="icon-box">
-                                        <i class="fas fa-play"></i>
-                                    </div>
-                                    <div class="why-choose-item-content">
-                                        <h3>Expertise You Can Trust</h3>
-                                        <p>With years of experience and a team of skilled professionals, we deliver
-                                            innovative, functional, and beautifully crafted spaces that exceed
-                                            expectations.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Progress Bars -->
-                            <div class="why-choose-progress-list reveal-on-scroll">
-                                <div class="skills-progress-bar">
-                                    <div class="skillbar" data-percent="85%">
-                                        <div class="skill-data">
-                                            <div class="skill-title">Residential Design</div>
-                                            <div class="skill-no">85%</div>
-                                        </div>
-                                        <div class="skill-progress">
-                                            <div class="count-bar" style="width: 85%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="skills-progress-bar">
-                                    <div class="skillbar" data-percent="95%">
-                                        <div class="skill-data">
-                                            <div class="skill-title">Space Planning & Layout</div>
-                                            <div class="skill-no">95%</div>
-                                        </div>
-                                        <div class="skill-progress">
-                                            <div class="count-bar" style="width: 95%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Button -->
-                            <div class="why-choose-btn reveal-on-scroll">
-                                <a href="contact.html" class="sp-btn" data-cursor-text="Contact">Get in Touch</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-6">
-                        <!-- Image Collage -->
-                        <div class="why-choose-images reveal-on-scroll">
-                            <!-- Left Column -->
-                            <div class="why-choose-image-box-1">
-                                <div class="contact-us-circle">
-                                    <a href="contact.html" data-cursor-text="Reach">
-                                        <!-- Placeholder SVG text circle -->
-                                        <svg viewBox="0 0 100 100" width="100" height="100">
-                                            <defs>
-                                                <path id="circle"
-                                                    d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-                                            </defs>
-                                            <text font-size="14" fill="#c5a059"
-                                                font-family="'Space Grotesk', sans-serif" font-weight="600"
-                                                letter-spacing="2">
-                                                <textPath xlink:href="#circle">CONTACT US • CONTACT US •</textPath>
-                                            </text>
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div class="why-choose-image img-tall">
-                                    <img src="img/project1.jpg" alt="Interior Architecture">
-                                </div>
-                            </div>
-
-                            <!-- Right Column -->
-                            <div class="why-choose-image-box-2">
-                                <div class="why-choose-image img-arch">
-                                    <img src="img/house.jpg" alt="Minimalist Arch Design">
-                                </div>
-                                <div class="why-choose-image img-square">
-                                    <img src="img/office.jpg" alt="Modern Chair">
-                                </div>
-                                <div class="why-choose-counter-box" data-cursor-text="Wow">
-                                    <h2><span class="counter">5000</span>+</h2>
-                                    <h3>Hours of<br>Design Work</h3>
-                                </div>
-                            </div>
-                        </div>
+        <!-- ══ WHY CHOOSE US (Split Layout with Floor Plan) ══════ -->
+        <section class="why-choose-us-split" style="padding-top: 88px; border-top: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03); overflow: hidden; background-color: var(--bg-dark);">
+            <div class="row g-0 align-items-stretch">
+                <!-- Left: Floor Plan Image -->
+                <div class="col-lg-6" style="position: relative; min-height: 50vh; display: flex; align-items: center; justify-content: center; background-color: var(--bg-dark);">
+                    <img src="img/floorplan_dark.png" alt="Architectural Floor Plan" style="width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0; padding: 40px; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));">
+                </div>
+                <!-- Right: Content -->
+                <div class="col-lg-6" style="position: relative; display: flex; align-items: center; padding: 80px 10%; background: var(--bg-card);">
+                    <div class="reveal-on-scroll">
+                        <p class="section-subheading" style="color: var(--accent); font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 14px;">Why Choose Us</p>
+                        <h2 class="section-title" style="font-family: 'Outfit', sans-serif; font-size: 38px; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; line-height: 1.2; margin-bottom: 20px;">Your Trusted Partner<br>From Start to Finish</h2>
+                        <div class="section-gold-line" style="width: 48px; height: 1px; background: var(--accent); margin-bottom: 28px;"></div>
+                        <p class="philosophy-desc" style="font-size: 15px; line-height: 1.85; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px;">We guide you through the design journey with transparency, professionalism, and personalized service, ensuring a smooth, enjoyable, and stress-free process.</p>
+                        <p class="philosophy-desc" style="font-size: 15px; line-height: 1.85; color: rgba(255, 255, 255, 0.6); margin-bottom: 30px;">With years of experience and a team of skilled professionals, we deliver innovative, functional, and beautifully crafted spaces that exceed expectations.</p>
+                        <a href="contact.html" class="sp-btn">Get in Touch</a>
                     </div>
                 </div>
             </div>
@@ -1041,30 +915,188 @@
 
     </main>
 
-    <!-- ══ FOOTER ════════════════════════════════════════════════ -->
-    <footer class="sp-footer" role="contentinfo">
+    <!-- ===================== SECTION: YOUTUBE SLIDER ===================== -->
+    <section id="youtube-section" class="sp-section sp-youtube" aria-labelledby="youtube-heading">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <a href="index.html" class="logo-text" style="font-size:18px;" aria-label="Bauen — Home">Bauen</a>
+            <div class="youtube-header reveal-on-scroll">
+                <div class="youtube-header-text">
+                    <p class="sp-label">Videos</p>
+                    <h2 class="sp-heading" id="youtube-heading">Featured Videos</h2>
+                    <div class="sp-divider"></div>
                 </div>
-                <div class="col-md-4 text-center">
-                    <nav aria-label="Footer navigation">
-                        <ul class="sp-footer-links" role="list">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="team.html">Team</a></li>
-                            <li><a href="projects.html">Projects</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev-arrow" aria-label="Previous videos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="slider-arrow next-arrow" aria-label="Next videos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
-                <div class="col-md-4 text-end">
-                    <p class="copyright-text">&copy; 2026 <a href="#">Bauen</a>. All rights reserved.</p>
+            </div>
+
+            <div class="youtube-slider-container reveal-on-scroll">
+                <div class="youtube-slider-wrapper" id="youtubeSliderWrapper">
+                    <div class="youtube-slider-track" id="youtubeSliderTrack">
+                        <!-- Default Static Fallbacks based on actual channel videos -->
+                        <div class="youtube-card" data-index="0">
+                            <a href="https://www.youtube.com/watch?v=CBhOxQPhdrM" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/CBhOxQPhdrM/hqdefault.jpg" alt="TES" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 9, 2026</span>
+                                    <h4 class="youtube-card__title">TES</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="1">
+                            <a href="https://www.youtube.com/watch?v=CjHAuckcXiw" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/CjHAuckcXiw/hqdefault.jpg" alt="Mango Grading System" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 9, 2026</span>
+                                    <h4 class="youtube-card__title">Mango Grading System</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="2">
+                            <a href="https://www.youtube.com/watch?v=UstbR8PGDE4" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/UstbR8PGDE4/hqdefault.jpg" alt="Solar tunnel dryer in action" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 9, 2026</span>
+                                    <h4 class="youtube-card__title">Solar tunnel dryer in action</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="3">
+                            <a href="https://www.youtube.com/watch?v=bAHVwGRFZg0" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/bAHVwGRFZg0/hqdefault.jpg" alt="Parabolic Trough" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 8, 2026</span>
+                                    <h4 class="youtube-card__title">Parabolic Trough</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="4">
+                            <a href="https://www.youtube.com/watch?v=AhCfZ1TuRk8" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/AhCfZ1TuRk8/hqdefault.jpg" alt="Growing Kale Microgreens Soilless 10d in 17s" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 8, 2026</span>
+                                    <h4 class="youtube-card__title">Growing Kale Microgreens Soilless 10d in 17s</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="5">
+                            <a href="https://www.youtube.com/watch?v=GMxW_k1Q8C8" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/GMxW_k1Q8C8/hqdefault.jpg" alt="Domestic Cooker" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 8, 2026</span>
+                                    <h4 class="youtube-card__title">Domestic Cooker 1.5Sq mtr</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="6">
+                            <a href="https://www.youtube.com/watch?v=C2KEZ-SaGcE" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/C2KEZ-SaGcE/hqdefault.jpg" alt="Siddharoodh Math" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 3, 2026</span>
+                                    <h4 class="youtube-card__title">Siddharoodh Math</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="youtube-card" data-index="7">
+                            <a href="https://www.youtube.com/watch?v=41IJivgeelk" target="_blank" rel="noopener" class="youtube-card__link">
+                                <div class="youtube-card__thumb-container">
+                                    <img src="https://img.youtube.com/vi/41IJivgeelk/hqdefault.jpg" alt="fish dryer 3" class="youtube-card__thumb" loading="lazy">
+                                    <div class="youtube-card__play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="youtube-card__info">
+                                    <span class="youtube-card__date">June 3, 2026</span>
+                                    <h4 class="youtube-card__title">fish dryer 3</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-dots-container reveal-on-scroll">
+                    <div class="slider-dots" id="youtubeSliderDots">
+                        <button class="slider-dot active" aria-label="Go to slide 1"></button>
+                        <button class="slider-dot" aria-label="Go to slide 2"></button>
+                        <button class="slider-dot" aria-label="Go to slide 3"></button>
+                        <button class="slider-dot" aria-label="Go to slide 4"></button>
+                        <button class="slider-dot" aria-label="Go to slide 5"></button>
+                        <button class="slider-dot" aria-label="Go to slide 6"></button>
+                        <button class="slider-dot" aria-label="Go to slide 7"></button>
+                        <button class="slider-dot" aria-label="Go to slide 8"></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+    </section>
+
+     <!-- ══ FOOTER ════════════════════════════════════════════════ -->
+     <footer class="sp-footer" role="contentinfo">
+         <div class="container">
+             <div class="text-center">
+                 <p class="copyright-text">&copy; 2026 <a href="#">Bauen</a>. All rights reserved.</p>
+             </div>
+         </div>
+     </footer>
 
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/plugins.js"></script>

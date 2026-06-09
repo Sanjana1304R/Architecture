@@ -541,4 +541,190 @@ document.addEventListener("DOMContentLoaded", () => {
         const cursor = new Cursor();
     }
 
+    // === YouTube Dynamic Video Slider ===
+    const youtubeTrack = document.getElementById("youtubeSliderTrack");
+    const youtubeWrapper = document.getElementById("youtubeSliderWrapper");
+    const youtubeDots = document.getElementById("youtubeSliderDots");
+    const prevArrow = document.querySelector(".prev-arrow");
+    const nextArrow = document.querySelector(".next-arrow");
+
+    if (youtubeTrack && youtubeWrapper) {
+        const channelId = "UCB1lMrzFkZjs7qu4jxl32zA";
+        const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}&t=${Date.now()}`;
+
+        // Utility to format ISO date to a localized readable format
+        const formatDate = (isoString) => {
+            try {
+                const date = new Date(isoString);
+                if (isNaN(date.getTime())) return "Recent Video";
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch (e) {
+                return "Recent Video";
+            }
+        };
+
+        // Utility to escape HTML strings safely
+        const escapeHTML = (str) => {
+            if (!str) return "";
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
+        const getElementText = (parent, tagName) => {
+            let el = parent.getElementsByTagName("yt:" + tagName)[0] || 
+                     parent.getElementsByTagName(tagName)[0] ||
+                     parent.getElementsByTagNameNS("*", tagName)[0];
+            return el ? el.textContent.trim() : "";
+        };
+
+        const setupSliderNavigation = () => {
+            const getSlideStep = () => {
+                const firstCard = youtubeTrack.children[0];
+                if (!firstCard) return 0;
+                return firstCard.offsetWidth + 24; // card width + gap
+            };
+
+            // Arrow Clicks
+            if (nextArrow) {
+                nextArrow.addEventListener("click", () => {
+                    const step = getSlideStep();
+                    youtubeWrapper.scrollBy({ left: step, behavior: "smooth" });
+                });
+            }
+            if (prevArrow) {
+                prevArrow.addEventListener("click", () => {
+                    const step = getSlideStep();
+                    youtubeWrapper.scrollBy({ left: -step, behavior: "smooth" });
+                });
+            }
+
+            // Sync active dot on scroll
+            let isScrolling;
+            youtubeWrapper.addEventListener("scroll", () => {
+                window.clearTimeout(isScrolling);
+                isScrolling = setTimeout(() => {
+                    const scrollLeft = youtubeWrapper.scrollLeft;
+                    const step = getSlideStep();
+                    if (step === 0) return;
+                    const activeIndex = Math.min(
+                        youtubeTrack.children.length - 1,
+                        Math.max(0, Math.round(scrollLeft / step))
+                    );
+
+                    const dots = youtubeDots.querySelectorAll(".slider-dot");
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle("active", index === activeIndex);
+                    });
+                }, 66);
+            }, { passive: true });
+
+            // Initialize Dot clicks for existing cards if we are in fallback mode
+            const dots = youtubeDots.querySelectorAll(".slider-dot");
+            dots.forEach((dot, index) => {
+                dot.addEventListener("click", () => {
+                    const step = getSlideStep();
+                    youtubeWrapper.scrollTo({
+                        left: index * step,
+                        behavior: "smooth"
+                    });
+                });
+            });
+        };
+
+        // Render cards dynamically
+        const renderYouTubeCards = (videos) => {
+            youtubeTrack.innerHTML = "";
+            youtubeDots.innerHTML = "";
+
+            videos.forEach((video, index) => {
+                // Card Markup
+                const card = document.createElement("div");
+                card.className = "youtube-card";
+                card.setAttribute("data-index", index);
+                card.innerHTML = `
+                    <a href="${escapeHTML(video.url)}" target="_blank" rel="noopener" class="youtube-card__link">
+                        <div class="youtube-card__thumb-container">
+                            <img src="${escapeHTML(video.thumbnail)}" alt="${escapeHTML(video.title)}" class="youtube-card__thumb" loading="lazy">
+                            <div class="youtube-card__play-btn">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="youtube-card__info">
+                            <span class="youtube-card__date">${formatDate(video.published)}</span>
+                            <h4 class="youtube-card__title">${escapeHTML(video.title)}</h4>
+                        </div>
+                    </a>
+                `;
+                youtubeTrack.appendChild(card);
+
+                // Indicator Dots markup
+                const dot = document.createElement("button");
+                dot.className = `slider-dot${index === 0 ? ' active' : ''}`;
+                dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+                youtubeDots.appendChild(dot);
+            });
+
+            // Re-setup navigation and swipe events
+            setupSliderNavigation();
+        };
+
+        // Fetch feed asynchronously
+        fetch(proxyUrl)
+            .then(res => {
+                if (!res.ok) throw new Error("CORS Proxy issue");
+                return res.json();
+            })
+            .then(data => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+                
+                // Check parse error
+                const parserError = xmlDoc.getElementsByTagName("parsererror");
+                if (parserError.length > 0) throw new Error("XML Parse Error");
+
+                const entries = xmlDoc.getElementsByTagName("entry");
+                if (entries.length === 0) throw new Error("No entries found");
+
+                const videos = [];
+                for (let i = 0; i < Math.min(8, entries.length); i++) {
+                    const entry = entries[i];
+                    const id = getElementText(entry, "videoId");
+                    const title = getElementText(entry, "title");
+                    const published = getElementText(entry, "published");
+
+                    if (id) {
+                        videos.push({
+                            id: id,
+                            title: title,
+                            published: published,
+                            url: `https://www.youtube.com/watch?v=${id}`,
+                            thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+                        });
+                    }
+                }
+
+                if (videos.length > 0) {
+                    renderYouTubeCards(videos);
+                } else {
+                    throw new Error("No valid videos parsed");
+                }
+            })
+            .catch(err => {
+                console.warn("Could not load fresh YouTube feed, keeping fallback static cards:", err);
+                // Fallback: Setup navigation events for the static HTML fallback cards already on the page
+                setupSliderNavigation();
+            });
+    }
+
 });
